@@ -1,8 +1,8 @@
-package com.justing.opengltest.main;
+package com.justing.opengltest.utils;
 
 public class CameraAngleHandler {
 	
-	private float x = 0, y = 0, cx = 0, cy = 0;
+	private float x = 0, y = 0, cx = 0, cy = 0, cz = 0;
 	private boolean run = false;
 	Thread t = null;
 	private ArrowActionContainer aac = ArrowActionContainer.getInstance();
@@ -17,13 +17,15 @@ public class CameraAngleHandler {
 			@Override
 			public void run() {
 				while (run){
-					x += (float)(aac.getDx() * 2.0f);
-					y += (float)(aac.getDy() * 2.0f);
-					cx += (float)(aac.getEx() * 0.05f);
-					cy += (float)(aac.getEy() * 0.05f);
+					x -= (float)(aac.getDx() * 0.05f);
+					y += (float)(aac.getDy() * 0.05f);
+					
+					cx -= (float)(aac.getEx() * 0.4f * Math.cos(x) + aac.getEz() * 0.4f * Math.sin(x));
+					cy += (float)(aac.getEy() * 0.4f);
+					cz -= (float)(aac.getEz() * 0.4f * Math.cos(x) - aac.getEx() * 0.4f * Math.sin(x));
 					
 					try {
-						Thread.sleep(50);
+						Thread.sleep(30);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
@@ -40,20 +42,9 @@ public class CameraAngleHandler {
 		run = false;
 	}
 
-	public float getX() {
-		return x;
-	}
-
-	public float getY() {
-		return y;
-	}
-
-	public float getCx() {
-		return cx;
-	}
-
-	public float getCy() {
-		return cy;
-	}
-	
+	public float getX() {return x;}
+	public float getY() {return y;}
+	public float getCx() {return cx;}
+	public float getCy() {return cy;}
+	public float getCz() {return cz;}
 }
