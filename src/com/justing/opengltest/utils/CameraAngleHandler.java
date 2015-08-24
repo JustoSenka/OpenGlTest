@@ -2,7 +2,7 @@ package com.justing.opengltest.utils;
 
 public class CameraAngleHandler {
 	
-	private float x = 0, y = 0, cx = 0, cy = 0, cz = 0;
+	private float x = 0, y = 0, cx = 10, cy = 0, cz = -60;
 	private boolean run = false;
 	Thread t = null;
 	private ArrowActionContainer aac = ArrowActionContainer.getInstance();

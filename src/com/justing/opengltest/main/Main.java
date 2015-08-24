@@ -36,22 +36,9 @@ public class Main {
 		frame.getContentPane().setPreferredSize( Toolkit.getDefaultToolkit().getScreenSize());
 		frame.setSize(frame.getContentPane().getPreferredSize());
 		frame.setResizable(false);
-		//frame.pack();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		frame.getContentPane().add(glcanvas);
-		/*
-	    SwingUtilities.invokeLater(new Runnable() {
-	        public void run()
-	        {
-	          Point p = new Point(0, 0);
-	          SwingUtilities.convertPointToScreen(p, frame.getContentPane());
-	          Point l = frame.getLocation();
-	          l.x -= p.x;
-	          l.y -= p.y;
-	          frame.setLocation(l);
-	        }
-	      });
-		*/
 		frame.setVisible(true);
 		
 		ArrowActionContainer.getInstance().configureKeyBindings(frame);
