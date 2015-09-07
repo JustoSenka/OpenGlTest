@@ -1,8 +1,8 @@
 package com.justing.opengltest.shapes;
 
-import com.jogamp.opengl.GL2;
-import com.jogamp.opengl.glu.GLU;
+import com.jogamp.opengl.glu.GLUquadric;
 
-public interface TessShape {
-	public void draw(GL2 gl, GLU glu);
+public abstract class TessShape extends Shape{
+	
+	protected GLUquadric quad;
 }

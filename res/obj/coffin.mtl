@@ -1,0 +1,12 @@
+# Blender MTL File: 'None'
+# Material Count: 1
+
+newmtl Coffin1
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.276078 0.235294 0.210196
+Ks 0.165000 0.165000 0.165000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd Coffin.JPG

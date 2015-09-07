@@ -2,6 +2,7 @@ package com.justing.opengltest.utils;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
@@ -13,7 +14,8 @@ import javax.swing.KeyStroke;
 
 public class ArrowActionContainer {
 	
-	protected short dx = 0, dy = 0, ex = 0, ey = 0, ez = 0;
+	protected short dx = 0, dy = 0, ex = 0, ey = 0, ez = 0, shift = 0;
+	protected JFrame frame;
 	private final static ArrowActionContainer Instance = new ArrowActionContainer();
 	private ArrowActionContainer(){}
 	
@@ -22,6 +24,7 @@ public class ArrowActionContainer {
 	}
 
 	public void configureKeyBindings(JFrame frame) {
+		this.frame = frame;
 		JRootPane rootPane = frame.getRootPane();
         InputMap im = rootPane.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
         ActionMap am = rootPane.getActionMap();
@@ -41,14 +44,18 @@ public class ArrowActionContainer {
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0, false), "W");
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0, false), "S");
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0, false), "Space");
-        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_C, 0, false), "Shift");
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_F, 0, false), "f");
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, 0, false), "v");
         
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_D, 0, true), "dUp");
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0, true), "aUp");
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0, true), "wUp");
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0, true), "sUp");
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0, true), "SpaceUp");
-        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_C, 0, true), "ShiftUp");
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_F, 0, true), "fUp");
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, 0, true), "vUp");
+        
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, false), "esc");
 
         am.put("RightArrowDown", this.new ArrowAction("RightArrowDown"));
         am.put("LeftArrowDown", this.new ArrowAction("LeftArrowDown"));
@@ -65,14 +72,18 @@ public class ArrowActionContainer {
         am.put("W", this.new ArrowAction("W"));
         am.put("S", this.new ArrowAction("S"));
         am.put("Space", this.new ArrowAction("Space"));
-        am.put("Shift", this.new ArrowAction("Shift"));
+        am.put("f", this.new ArrowAction("f"));
+        am.put("v", this.new ArrowAction("v"));
         
         am.put("dUp", this.new ArrowAction("dUp"));
         am.put("aUp", this.new ArrowAction("aUp"));
         am.put("wUp", this.new ArrowAction("wUp"));
         am.put("sUp", this.new ArrowAction("sUp"));
         am.put("SpaceUp", this.new ArrowAction("SpaceUp"));
-        am.put("ShiftUp", this.new ArrowAction("ShiftUp"));
+        am.put("fUp", this.new ArrowAction("fUp"));
+        am.put("vUp", this.new ArrowAction("vUp"));
+        
+        am.put("esc", this.new ArrowAction("esc"));
 	}
 	
 	public short getDx() {return dx;}
@@ -80,6 +91,7 @@ public class ArrowActionContainer {
 	public short getEx() {return ex;}
 	public short getEy() {return ey;}
 	public short getEz() {return ez;}
+	public short getShift() {return shift;}
 	
 	@SuppressWarnings("serial")
 	protected class ArrowAction extends AbstractAction {
@@ -116,8 +128,10 @@ public class ArrowActionContainer {
 			} else if (cmd.equalsIgnoreCase("S")) {
 				ez = 1;
 			} else if (cmd.equalsIgnoreCase("Space")) {
+				shift = 1;
+			} else if (cmd.equalsIgnoreCase("f")) {
 				ey = 1;
-			} else if (cmd.equalsIgnoreCase("Shift")) {
+			} else if (cmd.equalsIgnoreCase("v")) {
 				ey = -1;
 			} else if (cmd.equalsIgnoreCase("aUp")) {
 				if (ex != 1)ex = 0;
@@ -127,10 +141,14 @@ public class ArrowActionContainer {
 				if (ez != 1)ez = 0;
 			} else if (cmd.equalsIgnoreCase("sUp")) {
 				if (ez != -1)ez = 0;
-			} else if (cmd.equalsIgnoreCase("SpaceUp")) {
+			} else if (cmd.equalsIgnoreCase("fUp")) {
 				if (ey != -1)ey = 0;
-			} else if (cmd.equalsIgnoreCase("ShiftUp")) {
+			} else if (cmd.equalsIgnoreCase("vUp")) {
 				if (ey != 1)ey = 0;
+			} else if (cmd.equalsIgnoreCase("SpaceUp")) {
+				shift = 0;
+			} else if (cmd.equalsIgnoreCase("esc")){
+				frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 			}
 		}
 	}
